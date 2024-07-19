@@ -1,3 +1,5 @@
+import "./styles.css";
+
 import { ThemeProvider } from "./utils/themeProvider";
 
 export const metadata = {
@@ -33,7 +35,7 @@ export default function RootLayout({
             style={{
               background: "slategrey",
               padding: "1rem",
-              position: "absolute",
+              position: "fixed",
               bottom: 0,
               right: 0,
               left: 0,
