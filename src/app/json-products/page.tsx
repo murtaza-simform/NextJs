@@ -1,3 +1,9 @@
+// import { cookies } from "next/headers";
+
+// export const fetchCache = "default-cache"; //route config for caching subsequent req
+
+// export const revalidate = 10; //route config for revalidation - do not over-write options
+
 type Product = {
   id: number;
   title: string;
@@ -6,8 +12,23 @@ type Product = {
 };
 
 export default async function ProductsPage() {
-  const response = await fetch("http://localhost:3001/products");
+
+  //cached if above dynamic function and no options for no-store
+  const response = await fetch("http://localhost:3001/products",{
+    next:{
+      revalidate: 10
+    }
+  });
   const products = await response.json();
+
+
+  //dynamic function
+  // const cookieStore = cookies();
+  // cookieStore.get("theme");
+
+  //not-cached since below dynamic function
+  // const detailsResponse = await fetch("http://localhost:3001/products/1");
+  // const details = await detailsResponse.json();
 
   return (
     <ul className="space-y-4 p-4">
@@ -19,6 +40,7 @@ export default async function ProductsPage() {
           <h2 className="text-xl font-semibold">{product.title}</h2>
           <p>{product.description}</p>
           <p className="text-lg font-medium">${product.price}</p>
+          {/* <p>{details.price}</p> */}
         </li>
       ))}
     </ul>
